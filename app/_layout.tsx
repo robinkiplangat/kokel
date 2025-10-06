@@ -16,12 +16,23 @@ import {
 import { StatusBar } from "expo-status-bar";
 import { Button } from "@/components/button";
 import { WidgetProvider } from "@/contexts/WidgetContext";
+import { AssessmentProvider } from "@/contexts/AssessmentContext";
+import {
+  Montserrat_400Regular,
+  Montserrat_600SemiBold,
+  Montserrat_700Bold,
+} from '@expo-google-fonts/montserrat';
+import {
+  Inter_400Regular,
+  Inter_600SemiBold,
+  Inter_700Bold,
+} from '@expo-google-fonts/inter';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export const unstable_settings = {
-  initialRouteName: "(tabs)",
+  initialRouteName: "index",
 };
 
 export default function RootLayout() {
@@ -29,6 +40,12 @@ export default function RootLayout() {
   const networkState = useNetworkState();
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    Montserrat_400Regular,
+    Montserrat_600SemiBold,
+    Montserrat_700Bold,
+    Inter_400Regular,
+    Inter_600SemiBold,
+    Inter_700Bold,
   });
 
   useEffect(() => {
@@ -84,8 +101,12 @@ export default function RootLayout() {
           value={colorScheme === "dark" ? CustomDarkTheme : CustomDefaultTheme}
         >
           <WidgetProvider>
-            <GestureHandlerRootView>
+            <AssessmentProvider>
+              <GestureHandlerRootView>
             <Stack>
+              {/* Splash Screen */}
+              <Stack.Screen name="index" options={{ headerShown: false }} />
+              
               {/* Main app with tabs */}
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 
@@ -116,7 +137,8 @@ export default function RootLayout() {
               />
             </Stack>
             <SystemBars style={"auto"} />
-            </GestureHandlerRootView>
+              </GestureHandlerRootView>
+            </AssessmentProvider>
           </WidgetProvider>
         </ThemeProvider>
     </>
